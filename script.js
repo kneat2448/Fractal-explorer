@@ -65,31 +65,46 @@ const fragmentShader2D = `
             float iter = 0.0;
             for (int i = 0; i < 10000; i++) {
                 if (i >= u_max_iter) break;
+                
                 float r = length(z);
                 float theta = atan(z.y, z.x);
+                
                 float r_pow = pow(r, u_power);
                 vec2 z_pow = r_pow * vec2(cos(u_power * theta), sin(u_power * theta));
+                
                 float r_pow_m = pow(r, u_power - 1.0);
                 vec2 z_pow_m = r_pow_m * vec2(cos((u_power - 1.0) * theta), sin((u_power - 1.0) * theta));
                 
-                vec2 p = z_pow - vec2(1.0, 0.0);
-                vec2 p_prime = u_power * z_pow_m;
+                vec2 f_z = z_pow - vec2(1.0, 0.0);
+                vec2 f_prime_z = u_power * z_pow_m;
                 
-                float denom = p_prime.x * p_prime.x + p_prime.y * p_prime.y;
-                if (denom < 1e-6) break;
+                float denom = dot(f_prime_z, f_prime_z);
+                if (denom < 1e-12) break;
                 
-                vec2 quotient = vec2(p.x * p_prime.x + p.y * p_prime.y, p.y * p_prime.x - p.x * p_prime.y) / denom;
-                z = z - quotient;
+                vec2 step = vec2(
+                    f_z.x * f_prime_z.x + f_z.y * f_prime_z.y,
+                    f_z.y * f_prime_z.x - f_z.x * f_prime_z.y
+                ) / denom;
                 
-                if (length(quotient) < 1e-4) {
-                    iter = float(i);
-                    break;
-                }
+                z -= step;
                 iter = float(i);
+                if (dot(step, step) < 1e-10) break;
             }
+            
             float angle = atan(z.y, z.x);
-            float t = (angle + 3.14159) / 6.28318;
-            gl_FragColor = vec4(hsv2rgb(vec3(t, 1.0, 1.0 - iter/float(u_max_iter))), 1.0);
+            float hue = (angle + 3.14159) / 6.28318;
+            
+            // Improved coloring: Use iteration count for "depth" and "glow"
+            float val = 1.0 - (iter / float(u_max_iter));
+            val = pow(val, 0.5); // Boost brightness of boundaries
+            
+            // Use different color mapping for Newton
+            vec3 col;
+            if (u_color_scheme == 0) col = hsv2rgb(vec3(hue, 0.7, val));
+            else if (u_color_scheme == 1) col = hsv2rgb(vec3(hue, 0.9, val * 1.2));
+            else col = hsv2rgb(vec3(hue, 0.6, val));
+            
+            gl_FragColor = vec4(col, 1.0);
             return;
         }
         
@@ -408,8 +423,18 @@ function syncValsToState() {
 function updateFromRange() {
     state.maxIter = parseInt(els.maxIter.value); state.zoom = parseFloat(els.zoom.value);
     state.offsetX = parseFloat(els.panX.value); state.offsetY = parseFloat(els.panY.value);
-    state.colorScheme = parseInt(els.colorScheme.value); state.fractalType = parseInt(els.fractalType.value);
-    state.power = parseFloat(els.power.value); state.cReal = parseFloat(els.cReal.value);
+    state.colorScheme = parseInt(els.colorScheme.value); 
+    let oldFractalType = state.fractalType;
+    state.fractalType = parseInt(els.fractalType.value);
+    state.power = parseFloat(els.power.value);
+    
+    // Default to power 3 for Newton if it was 2
+    if (state.fractalType === 2 && oldFractalType !== 2 && state.power === 2.0) {
+        state.power = 3.0;
+        els.power.value = 3.0;
+    }
+    
+    state.cReal = parseFloat(els.cReal.value);
     state.cImag = parseFloat(els.cImag.value); state.zReal = parseFloat(els.zReal.value);
     state.zImag = parseFloat(els.zImag.value); state.camPitch = parseFloat(els.camPitch.value);
     state.camYaw = parseFloat(els.camYaw.value); state.treeDepth = parseInt(els.treeDepth.value);

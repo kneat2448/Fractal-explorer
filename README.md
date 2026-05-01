@@ -1,6 +1,6 @@
 # Interactive Fractal Explorer
 
-A high-performance, interactive fractal visualization tool built with **WebGL**, **GLSL**, and **Vanilla JavaScript**. This project allows real-time exploration of various 2D and 3D fractals with a modern, glassmorphism-inspired user interface.
+Interactive fractal visualization tool built with **WebGL**, **GLSL**, and **Vanilla JavaScript**. This project allows real-time exploration of various 2D and 3D fractals with a modern, glassmorphism-inspired user interface.
 
 ##  Features
 
@@ -53,8 +53,8 @@ To run the static fractal generator:
     python fractal.py
     ```
 
-## 📸 Screenshots
+##  Screenshots
 *(Add your own screenshots here to showcase the stunning visuals!)*
 
-## 📜 License
+##  License
 MIT License - feel free to use and expand upon this project!
