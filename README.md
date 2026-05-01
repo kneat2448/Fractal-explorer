@@ -53,8 +53,10 @@ To run the static fractal generator:
     python fractal.py
     ```
 
-##  Screenshots
-*(Add your own screenshots here to showcase the stunning visuals!)*
+## 📸 Screenshots
+<img width="1916" height="935" alt="image" src="https://github.com/user-attachments/assets/892bd8fd-6844-41b1-8fea-c53318caad03" />
+<img width="1910" height="940" alt="image" src="https://github.com/user-attachments/assets/64b87618-6760-4492-a29e-531fb616612a" />
+
 
 ##  License
 MIT License - feel free to use and expand upon this project!
