@@ -63,7 +63,7 @@ if __name__ == "__main__":
     plt.ylabel("Imaginary Part (Im)")
     
     # Save the output to a high-resolution image
-    output_file = "mandelbrot.png"
+    output_file = "fractal.png"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Saved fractal to {output_file}")
     

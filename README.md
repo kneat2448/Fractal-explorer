@@ -2,9 +2,9 @@
 
 A high-performance, interactive fractal visualization tool built with **WebGL**, **GLSL**, and **Vanilla JavaScript**. This project allows real-time exploration of various 2D and 3D fractals with a modern, glassmorphism-inspired user interface.
 
-## 🚀 Features
+##  Features
 
-### ✨ Interactive WebGL Explorer
+###  Interactive WebGL Explorer
 *   **Real-time Rendering**: Smooth 60 FPS exploration powered by GPU acceleration (WebGL 1.0).
 *   **Multiple Fractal Types**:
     *   **Mandelbrot Set**: The classic complex plane fractal.
@@ -20,15 +20,15 @@ A high-performance, interactive fractal visualization tool built with **WebGL**,
     *   Manual value input for precise mathematical exploration.
 *   **Customization**: Multiple vibrant color schemes including "Twilight Shifted", "Magma", and "Electric Blue".
 
-### 🐍 Python Backend
-*   Includes the original `mandelbrot.py` script for static high-resolution generation using `NumPy` and `Matplotlib`.
+###  Python Backend
+*   Includes the original `fractal.py` script for static high-resolution generation using `NumPy` and `Matplotlib`.
 
 ## 🛠️ Technology Stack
 *   **Frontend**: HTML5, CSS3 (Vanilla), JavaScript (ES6).
 *   **Graphics Engine**: WebGL 1.0 / GLSL (Raymarching for 3D).
 *   **Python**: NumPy, Matplotlib (for static generation).
 
-## 🏃 Getting Started
+##  Getting Started
 
 ### Web Application
 The web app is purely client-side but requires a local server to load WebGL assets and handle security policies.
@@ -42,7 +42,7 @@ The web app is purely client-side but requires a local server to load WebGL asse
 3.  Open your browser and visit `http://localhost:8000`.
 
 ### Python Script
-To run the static Mandelbrot generator:
+To run the static fractal generator:
 
 1.  Install dependencies:
     ```bash
@@ -50,7 +50,7 @@ To run the static Mandelbrot generator:
     ```
 2.  Run the script:
     ```bash
-    python mandelbrot.py
+    python fractal.py
     ```
 
 ## 📸 Screenshots
