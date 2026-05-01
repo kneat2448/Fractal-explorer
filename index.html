@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Fractal Explorer</title>
+    <!-- Use Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- The WebGL Canvas -->
+    <canvas id="glCanvas"></canvas>
+
+
+    <!-- The 2D Canvas (for Pythagoras Tree) -->
+    <canvas id="canvas2d"
+        style="display: none; position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2;"></canvas>
+
+    <!-- Glassmorphism UI Panel -->
+    <div id="ui-panel">
+        <div class="header">
+            <h1>Fractal Explorer</h1>
+            <p>Interactive WebGL Fractal</p>
+        </div>
+
+        <div class="control-group">
+            <label for="fractal-type">Fractal Type</label>
+            <select id="fractal-type">
+                <option value="0">Mandelbrot Set</option>
+                <option value="1">Julia Set</option>
+                <option value="2">Newton Fractal</option>
+                <option value="3">Sierpinski Pyramid (3D)</option>
+                <option value="4">Menger Sponge (3D)</option>
+                <option value="5">Pythagoras Tree (2D)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="max-iter">Max Iterations: <input type="number" id="max-iter-val" value="100"
+                    class="manual-input"></label>
+            <input type="range" id="max-iter" min="10" max="1000" value="100" step="1">
+        </div>
+
+        <div class="control-group">
+            <label for="power">Exponent (Z^N): <input type="number" id="power-val" value="2.0" class="manual-input"
+                    step="0.1"></label>
+            <input type="range" id="power" min="1.0" max="10.0" value="2.0" step="0.1">
+        </div>
+
+        <div id="c-controls" class="control-group" style="display: none;">
+            <label for="c-real">Julia C (Real): <input type="number" id="c-real-val" value="-0.4" class="manual-input"
+                    step="0.01"></label>
+            <input type="range" id="c-real" min="-2.0" max="2.0" value="-0.4" step="0.01">
+            <label for="c-imag">Julia C (Imag): <input type="number" id="c-imag-val" value="0.6" class="manual-input"
+                    step="0.01"></label>
+            <input type="range" id="c-imag" min="-2.0" max="2.0" value="0.6" step="0.01">
+        </div>
+
+        <div id="z-controls" class="control-group">
+            <label for="z-real">Initial Z (Real): <input type="number" id="z-real-val" value="0.0" class="manual-input"
+                    step="0.01"></label>
+            <input type="range" id="z-real" min="-2.0" max="2.0" value="0.0" step="0.01">
+            <label for="z-imag">Initial Z (Imag): <input type="number" id="z-imag-val" value="0.0" class="manual-input"
+                    step="0.01"></label>
+            <input type="range" id="z-imag" min="-2.0" max="2.0" value="0.0" step="0.01">
+        </div>
+
+        <div id="camera-controls" class="control-group" style="display: none;">
+            <label for="cam-pitch">Camera Pitch: <input type="number" id="cam-pitch-val" value="0.5"
+                    class="manual-input" step="0.01"></label>
+            <input type="range" id="cam-pitch" min="-1.5" max="1.5" value="0.5" step="0.01">
+            <label for="cam-yaw">Camera Yaw: <input type="number" id="cam-yaw-val" value="0.0" class="manual-input"
+                    step="0.01"></label>
+            <input type="range" id="cam-yaw" min="-3.14" max="3.14" value="0.0" step="0.01">
+        </div>
+
+        <div id="tree-controls" class="control-group" style="display: none;">
+            <label for="tree-depth">Recursion Depth: <input type="number" id="tree-depth-val" value="8"
+                    class="manual-input" step="1"></label>
+            <input type="range" id="tree-depth" min="1" max="14" value="8" step="1">
+        </div>
+
+        <div class="control-group">
+            <label for="zoom">Zoom Level: <input type="number" id="zoom-val" value="1.0" class="manual-input"
+                    step="0.1"></label>
+            <input type="range" id="zoom" min="0.1" max="5000" value="1.0" step="0.1">
+        </div>
+
+        <div class="control-group">
+            <label for="pan-x">Pan X: <input type="number" id="pan-x-val" value="-0.5" class="manual-input"
+                    step="0.01"></label>
+            <input type="range" id="pan-x" min="-2.5" max="1.0" value="-0.5" step="0.01">
+        </div>
+
+        <div class="control-group">
+            <label for="pan-y">Pan Y: <input type="number" id="pan-y-val" value="0.0" class="manual-input"
+                    step="0.01"></label>
+            <input type="range" id="pan-y" min="-1.5" max="1.5" value="0.0" step="0.01">
+        </div>
+
+        <div class="control-group">
+            <label for="color-scheme">Color Scheme</label>
+            <select id="color-scheme">
+                <option value="0">Twilight Shifted (Default)</option>
+                <option value="1">Magma</option>
+                <option value="2">Electric Blue</option>
+                <option value="3">Psychedelic</option>
+            </select>
+        </div>
+
+        <div class="hint">
+            <p>Tip: You can also use your mouse to click & drag to pan, and scroll to zoom!</p>
+        </div>
+    </div>
+
+    <!-- WebGL Logic -->
+    <script src="script.js"></script>
+</body>
+
+</html>

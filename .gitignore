@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+v_env/
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+
+# Local server / Temp
+mandelbrot.png
+debug_log.txt
+node_modules/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
